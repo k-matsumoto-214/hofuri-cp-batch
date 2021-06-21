@@ -33,13 +33,13 @@ public class ScheduledTask {
   @Scheduled(cron = "0 0 0 * * *", zone = "Asia/Tokyo")
   @Transactional(rollbackFor = Exception.class)
   public void getCpBalance() throws Exception {
-    // // ChromeDriverのパスを指定(デプロイ用)
-    // System.setProperty("webdriver.chrome.driver",
-    //                    "/home/kei/chromedriver/chromedriver");
-
-    // ChromeDriverのパスを指定(開発用)
+    // ChromeDriverのパスを指定(デプロイ用)
     System.setProperty("webdriver.chrome.driver",
-                       "chromedriver/chromedriver.exe");
+                       "/home/kei/chromedriver/chromedriver");
+
+    // // ChromeDriverのパスを指定(開発用)
+    // System.setProperty("webdriver.chrome.driver",
+    //                    "chromedriver/chromedriver.exe");
 
     // headlessの設定
     ChromeOptions options = new ChromeOptions();
