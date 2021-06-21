@@ -1,4 +1,4 @@
-package com.kei.hofuri.hofuriTasklet;
+package com.kei.hofuri;
 
 import com.kei.hofuri.entity.CpInfo;
 import com.kei.hofuri.entity.Workday;
@@ -15,13 +15,13 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.WebDriverWait;
-import org.springframework.batch.core.StepContribution;
-import org.springframework.batch.core.scope.context.ChunkContext;
-import org.springframework.batch.core.step.tasklet.Tasklet;
-import org.springframework.batch.repeat.RepeatStatus;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Scheduled;
+import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
-public class CpBalanceTasklet implements Tasklet {
+@Component
+public class ScheduledTask {
   @Autowired
   private CpInfosDao cpInfosDao;
   @Autowired
@@ -29,19 +29,21 @@ public class CpBalanceTasklet implements Tasklet {
 
   /**
    * 日時残高を取得します。
-   */
-  public RepeatStatus execute(StepContribution contribution, ChunkContext chunkContext) throws Exception {
+   **/
+  @Scheduled(cron = "0 0 0 * * *", zone = "Asia/Tokyo")
+  @Transactional(rollbackFor = Exception.class)
+  public void getCpBalance() throws Exception {
     // // ChromeDriverのパスを指定(デプロイ用)
     // System.setProperty("webdriver.chrome.driver",
     //                    "/home/kei/chromedriver/chromedriver");
 
     // ChromeDriverのパスを指定(開発用)
     System.setProperty("webdriver.chrome.driver",
-                       "/chromedriver/chromedriver.exe");
+                       "chromedriver/chromedriver.exe");
 
     // headlessの設定
     ChromeOptions options = new ChromeOptions();
-    options.addArguments("--headless");
+    // options.addArguments("--headless");
 
     // chromedriverの取得
     ChromeDriver driver = new ChromeDriver(options);
@@ -201,6 +203,5 @@ public class CpBalanceTasklet implements Tasklet {
     if (workdaysDao.update(workday) != 1) {
       throw new Exception("営業日データの更新に失敗しました。");
     }
-    return RepeatStatus.FINISHED;
   }
 }
