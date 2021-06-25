@@ -1,4 +1,4 @@
-package com.kei.hofuri;
+package com.kei.hofuri.task;
 
 import com.kei.hofuri.entity.CpInfo;
 import com.kei.hofuri.entity.Workday;
@@ -9,8 +9,8 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.NoSuchElementException;
 import org.openqa.selenium.By;
+import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.support.ui.ExpectedCondition;
@@ -30,7 +30,7 @@ public class ScheduledTask {
   /**
    * 日時残高を取得します。
    **/
-  @Scheduled(cron = "0 0 0 * * *", zone = "Asia/Tokyo")
+  @Scheduled(cron = "0 0 2 * * *", zone = "Asia/Tokyo")
   @Transactional(rollbackFor = Exception.class)
   public void getCpBalance() throws Exception {
     // ChromeDriverのパスを指定(デプロイ用)
@@ -43,7 +43,7 @@ public class ScheduledTask {
 
     // headlessの設定
     ChromeOptions options = new ChromeOptions();
-    // options.addArguments("--headless");
+    options.addArguments("--headless");
 
     // chromedriverの取得
     ChromeDriver driver = new ChromeDriver(options);
@@ -187,6 +187,7 @@ public class ScheduledTask {
       }
     } catch (NoSuchElementException e) {
     } catch (Exception e) {
+      e.printStackTrace();
       throw new Exception("残高取得中に予期せぬ例外が発生しました。");
     } finally {
       driver.quit();
