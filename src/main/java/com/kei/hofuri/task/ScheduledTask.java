@@ -31,8 +31,8 @@ public class ScheduledTask {
   /**
    * 日時残高を取得します。
    **/
-  // @Scheduled(cron = "0 0 2 * * *", zone = "Asia/Tokyo")
-  @Scheduled(cron = "0 0 10 * * *", zone = "Asia/Tokyo")
+  @Scheduled(cron = "0 0 2 * * *", zone = "Asia/Tokyo")
+  // @Scheduled(cron = "0 0 10 * * *", zone = "Asia/Tokyo")
   @Transactional(rollbackFor = Exception.class)
   public void getCpBalance() throws Exception {
     // ChromeDriverのパスを指定(デプロイ用)
