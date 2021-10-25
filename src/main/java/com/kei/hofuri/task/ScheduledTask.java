@@ -1,14 +1,15 @@
 package com.kei.hofuri.task;
-
-import com.kei.hofuri.entity.CpInfo;
-import com.kei.hofuri.entity.Workday;
-import com.kei.hofuri.repository.CpInfosDao;
-import com.kei.hofuri.repository.WorkdaysDao;
 import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+
+import com.kei.hofuri.entity.CpInfo;
+import com.kei.hofuri.entity.Workday;
+import com.kei.hofuri.repository.CpInfosDao;
+import com.kei.hofuri.repository.WorkdaysDao;
+
 import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -30,7 +31,8 @@ public class ScheduledTask {
   /**
    * 日時残高を取得します。
    **/
-  @Scheduled(cron = "0 0 2 * * *", zone = "Asia/Tokyo")
+  // @Scheduled(cron = "0 0 2 * * *", zone = "Asia/Tokyo")
+  @Scheduled(cron = "0 0 10 * * *", zone = "Asia/Tokyo")
   @Transactional(rollbackFor = Exception.class)
   public void getCpBalance() throws Exception {
     // ChromeDriverのパスを指定(デプロイ用)
