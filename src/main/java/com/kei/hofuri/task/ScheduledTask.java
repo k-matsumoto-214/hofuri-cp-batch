@@ -60,7 +60,7 @@ public class ScheduledTask {
     //保振のページを開く
     driver.get("https://www.jasdec.com/reading/cpmei.php");
 
-    Thread.sleep(1000);
+    Thread.sleep(30000);
 
     //検索ボタンをクリック
     driver
