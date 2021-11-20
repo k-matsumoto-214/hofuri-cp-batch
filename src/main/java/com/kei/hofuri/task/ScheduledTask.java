@@ -31,7 +31,7 @@ public class ScheduledTask {
   /**
    * 日時残高を取得します。
    **/
-  @Scheduled(cron = "0 0 2 * * *", zone = "Asia/Tokyo")
+  @Scheduled(cron = "0 0 5 * * *", zone = "Asia/Tokyo")
   // @Scheduled(cron = "0 0 10 * * *", zone = "Asia/Tokyo")
   @Transactional(rollbackFor = Exception.class)
   public void getCpBalance() throws Exception {
@@ -68,8 +68,8 @@ public class ScheduledTask {
             "#MAIN > div:nth-child(3) > table > tbody > tr > td > font > table:nth-child(8) > tbody > tr > td > input[type=submit]:nth-child(4)"))
         .click();
 
-    // ページの更新を待つ 5秒でタイムアウト
-    new WebDriverWait(driver, 5).until(
+    // ページの更新を待つ 10秒でタイムアウト
+    new WebDriverWait(driver, 30).until(
         (ExpectedCondition<Boolean>) webDriver
         -> webDriver.getTitle().startsWith("銘柄公示情報 （短期社債等）検索"));
 
@@ -181,13 +181,14 @@ public class ScheduledTask {
           }
           pageNumber++; //ページナンバーをインクリメント
         }
-        // ページの更新を待つ 5秒でタイムアウト
-        new WebDriverWait(driver, 5).until(
+        // ページの更新を待つ 10秒でタイムアウト
+        new WebDriverWait(driver, 30).until(
             (ExpectedCondition<Boolean>) webDriver
             -> webDriver.getTitle().startsWith(
                 "銘柄公示情報 （短期社債等）検索"));
       }
     } catch (NoSuchElementException e) {
+      System.out.println("取得件数は" + result.size() + "件です");
     } catch (Exception e) {
       e.printStackTrace();
       throw new Exception("残高取得中に予期せぬ例外が発生しました。");
